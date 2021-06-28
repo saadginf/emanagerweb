@@ -1,0 +1,22 @@
+.top-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20px;
+  align-items: center;
+  margin-left: 100px;
+  padding-left: 20px;
+  text-align: center;
+  height: 100px;
+  -webkit-box-shadow: 0 4px 4px -4px rgb(155, 153, 153);
+  -moz-box-shadow: 0 4px 4px -3px rgb(155, 153, 153);
+  box-shadow: 0 4px 4px -3px rgb(155, 153, 153);
+}
+.top-bar h3 {
+  width: 200px;
+  font-size: 20px;
+}

@@ -1,0 +1,28 @@
+.sidebar-container {
+  background-color: #323a45;
+  width: 100px;
+  height: 100vh;
+  position: fixed;
+  margin-right: 100px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+.sidebarLinkContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+}
+.sideBarlink {
+  color: #f6f7f9;
+}
+.sideBarlink:hover {
+  color: #5faeb6;
+}
+.sideBarlinkSelected {
+  color: #5faeb6;
+}

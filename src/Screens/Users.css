@@ -1,0 +1,14 @@
+.settings-users {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.success-vector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.success-vector img {
+  width: 100px;
+  height: 100px;
+}

@@ -1,0 +1,8 @@
+.footer-container {
+  margin-top: 20px;
+  text-align: center;
+  margin-left: 100px;
+}
+.footer-container span {
+  color: gray;
+}

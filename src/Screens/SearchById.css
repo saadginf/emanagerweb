@@ -1,0 +1,15 @@
+.sugg-act {
+  border: 1px solid gray;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+.sugg-act h5 {
+  position: absolute;
+  top: -20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  left: 20px;
+  background-color: white;
+}
