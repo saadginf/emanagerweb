@@ -16,6 +16,7 @@ const Calendar = () => {
       console.log("Erreur Getting Events");
       return;
     }
+    console.log(result.data);
     setevent(result.data);
   };
   useEffect(() => {
@@ -30,7 +31,7 @@ const Calendar = () => {
         endAccessor="end"
         onSelectEvent={(event) => history.push("/search/" + event.id)}
         views={["month"]}
-        style={{ height: 800 }}
+        style={{ height: "100%" }}
       />
     </div>
   );

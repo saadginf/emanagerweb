@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-import { GithubPicker } from "react-color";
+
 import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
-import { addListing, getEventFields } from "../api/event";
+import { addListing, getEventFields, planEvent } from "../api/event";
 const Add = () => {
   const {
     register,
@@ -12,24 +12,32 @@ const Add = () => {
     formState: { errors },
   } = useForm();
   const [error, seterror] = useState();
-  const [show, setShow] = useState(false);
+
   const [fields, setfields] = useState();
-  const handleShow = () => setShow(true);
-  const [color, setColor] = useState("#1273DE");
-  const handleChange = (color) => {
-    setColor(color.hex);
-    setShow(false);
-  };
+
   const onSubmit = async (values) => {
-    const result = await addListing(values, values.file[0]);
-
-    if (!result.ok) {
-      seterror("Erreur Serveur");
-
+    const sDate = new Date(values.startDate);
+    const eDate = new Date(values.endDate);
+    const diffDays = sDate.getTime() - eDate.getTime();
+    if (diffDays > 0) {
+      seterror("Erreur de Date");
       return;
     }
-    alert("Ajouter avec Succès");
-    window.location.reload();
+    if (values.file[0]) {
+      const result = await addListing(values, values.file[0]);
+      if (!result.ok) {
+        seterror("Erreur Serveur");
+
+        return;
+      }
+      alert("Ajouter avec Succès");
+      window.location.reload();
+    } else {
+      delete values["file"];
+      planEvent(values);
+      alert("Ajouter avec Succès");
+      window.location.reload();
+    }
   };
   const getFields = async () => {
     const result = await getEventFields();
@@ -93,19 +101,15 @@ const Add = () => {
             <div className="form-group">
               <label className="text-info">Couleur</label>
               <br />
-              <input
-                value={color}
-                readOnly
-                className="form-control"
-                name="bgColor"
-                placeholder="Couleur"
-                type="text"
-                onClick={handleShow}
+              <select
                 {...register("bgColor", { required: true })}
-              />
-              <div className="color-picker-palette">
-                {show && <GithubPicker color={color} onChange={handleChange} />}
-              </div>
+                className="form-control"
+              >
+                <option value="#179DE0">Bleu</option>
+                <option value="#FC3545"> Rouge</option>
+                <option value="#F4D511">Jaune</option>
+                <option value="#52C652">Vert</option>
+              </select>
             </div>
           </Col>
 
@@ -143,6 +147,7 @@ const Add = () => {
               <Controller
                 name="lieux"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Select {...field} options={fields ? fields.lieux : []} />
                 )}
@@ -171,6 +176,7 @@ const Add = () => {
               <Controller
                 name="themEvent"
                 control={control}
+                rules={{ required: true }}
                 render={({ field }) => (
                   <Select {...field} options={fields ? fields.themes : []} />
                 )}
@@ -185,7 +191,7 @@ const Add = () => {
                 multiple
                 id="file"
                 className="form-control"
-                {...register("file", { required: true })}
+                {...register("file", { required: false })}
               />
             </div>
           </Col>
@@ -201,7 +207,7 @@ const Add = () => {
                 name="activites"
                 id="activites"
                 className="form-control"
-                {...register("activites", { required: true })}
+                {...register("activites", { required: false })}
               />
             </div>
           </Col>
@@ -214,7 +220,7 @@ const Add = () => {
                 name="suggestions"
                 id="suggestions"
                 className="form-control"
-                {...register("suggestions", { required: true })}
+                {...register("suggestions", { required: false })}
               />
             </div>
           </Col>

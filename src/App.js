@@ -18,6 +18,7 @@ import { removeToken } from "./auth/storage";
 import jwt_decode from "jwt-decode";
 import AuthContext from "./auth/context";
 import SearchById from "./Screens/SearchById";
+import Edit from "./Screens/Edit";
 
 if (localStorage.najiToken) {
   const decode = jwt_decode(localStorage.najiToken);
@@ -42,6 +43,7 @@ function App() {
               <Route path="/search" exact component={Search} />
               <Route path="/addevent" exact component={Add} />
               <Route path="/users" exact component={Users} />
+              <Route path="/edit/:id" exact component={Edit} />
               <Route path="/search/:id" exact component={SearchById} />
               <Redirect to="/home" />
             </Switch>
@@ -58,6 +60,7 @@ function App() {
               <Route path="/search" exact component={Search} />
               <Route path="/addevent" exact component={Add} />
               <Route path="/search/:id" exact component={SearchById} />
+              <Route path="/edit/:id" exact component={Edit} />
               <Redirect to="/home" />
             </Switch>
           </Layout>

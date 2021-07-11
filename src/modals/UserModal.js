@@ -3,12 +3,23 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Modal, Button } from "react-bootstrap";
 import scc from "../assets/success.png";
+import { addUSer } from "../api/auth";
 const UserModal = (props) => {
   const [success, setSuccess] = useState(false);
+  const [serverError, setserverError] = useState();
 
-  const { handleSubmit, register } = useForm();
-  const onSubmit = (values) => {
-    console.log(values);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (values) => {
+    let result = await addUSer(values);
+    if (!result.ok) {
+      setserverError("Erreur Serveur");
+      return;
+    }
+    setSuccess(true);
   };
 
   return (
@@ -61,6 +72,10 @@ const UserModal = (props) => {
                 Enregistrer
               </button>
             </div>
+            {Object.keys(errors).length != 0 && (
+              <p className="text-danger">{"Formulaire Invalide"}</p>
+            )}
+            {serverError && <p className="text-danger">{serverError}</p>}
           </form>
         )}
         {success && (
